@@ -23,11 +23,13 @@ d |>
   slice(-1) |>
   # keep relevant columns
   transmute(
-    scientific_name = `Latin (BirdLife > IOC > Clements>AviList)`,
+    scientific_name = `IOC World Bird List (v15.1)`,
+    order = Order,
+    family = `Family IOC 15.1`,
+    genus = Genus,
+    species = Species,
     social = parse_integer(Social_2)
   ) |>
-  # remove rows with missing data
-  drop_na() |>
 
   # write to file
   write.csv(

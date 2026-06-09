@@ -2,7 +2,7 @@
 
 **File name:** `birdbase.csv`
 
-**Title:** Data on social behaviour for 6650 bird species from the database BIRDBASE
+**Title:** Data on social behaviour for 11589 bird species from the database BIRDBASE
 
 **Authors:** Şekercioğlu et al.
 
@@ -10,11 +10,15 @@
 
 **Source data DOI:** <https://doi.org/10.6084/m9.figshare.27051040>
 
-**Dimensions:** 6650 rows x 2 columns
+**Dimensions:** 11589 rows x 6 columns
 
-**Notes:** To generate `birdbase.csv`, download the full BIRDBASE dataset and run the R script `birdbase-data-wrangling.R`. The CSV file contains only the relevant columns for this study and filters to species with observed data for the `Social_2` variable.
+**Notes:** To generate `birdbase.csv`, download the full BIRDBASE dataset and run the R script `birdbase-data-wrangling.R`. The CSV file contains only the relevant columns for this study: taxonomic names and the `Social_2` variable.
 
 **Data dictionary:**
 
-- `scientific_name` - The scientific name (genus and species names) for the parrot species.
-- `social` - Binary 0/1 integer. If 1, the bird species is social (i.e., lives with large numbers of birds, mixed species flocks, seasonal flocks of the same species, etc.) If 0, the bird species is not social. The variable is taken from the `Social_2` column in the BIRDBASE dataset.
+- `scientific_name` - The scientific name (genus and species names) for the bird species. The variable is taken from the `IOC World Bird List (v15.1)` column in the BIRDBASE dataset.
+- `order` - Taxonomic order name. The variable is taken from the `Order` column in the BIRDBASE dataset.
+- `family` - Taxonomic family name. The variable is taken from the `Family IOC 15.1` column in the BIRDBASE dataset.
+- `genus` - Taxonomic genus name. The variable is taken from the `Genus` column in the BIRDBASE dataset.
+- `species` - Taxonomic species name. The variable is taken from the `Species` column in the BIRDBASE dataset.
+- `social` - Binary 0/1 integer. If 1, the bird species is social (i.e., lives with large numbers of birds, mixed species flocks, seasonal flocks of the same species, etc.) If 0, the bird species is not social. If NA, data are missing. The variable is taken from the `Social_2` column in the BIRDBASE dataset.
