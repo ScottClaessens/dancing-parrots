@@ -10,6 +10,8 @@
 
 **Source data DOI:** <https://doi.org/10.6084/m9.figshare.27051040>
 
+**Date accessed:** 9th June 2026
+
 **Dimensions:** 11589 rows x 6 columns
 
 **Notes:** To generate `birdbase.csv`, download the full BIRDBASE dataset and run the R script `birdbase-data-wrangling.R`. The CSV file contains only the relevant columns for this study: taxonomic names and the `Social_2` variable.
