@@ -1,6 +1,6 @@
-# Information on dataset `species-names.csv`
+# Information on dataset `species_names.csv`
 
-**File name:** `species-names.csv`
+**File name:** `species_names.csv`
 
 **Title:** Scientific and common names for 406 parrot species
 

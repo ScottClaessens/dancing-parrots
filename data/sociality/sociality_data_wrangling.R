@@ -1,4 +1,4 @@
-# Title: R script to generate birdbase.csv
+# Title: R script to generate sociality.csv
 #
 # Author: Scott Claessens
 #

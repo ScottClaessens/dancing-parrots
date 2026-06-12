@@ -14,7 +14,7 @@
 
 **Dimensions:** 11589 rows x 6 columns
 
-**Notes:** To generate `sociality.csv`, download the full BIRDBASE dataset and run the R script `sociality-data-wrangling.R`. The CSV file contains only the relevant columns from BIRDBASE for this study: taxonomic names and the `Social_2` variable.
+**Notes:** To generate `sociality.csv`, download the full BIRDBASE dataset and run the R script `sociality_data_wrangling.R`. The CSV file contains only the relevant columns from BIRDBASE for this study: taxonomic names and the `Social_2` variable.
 
 **Data dictionary:**
 

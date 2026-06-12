@@ -15,7 +15,7 @@ list(
   # get data files
   tar_target(
     file_species_names,
-    "data/species-names/species-names.csv",
+    "data/species_names/species_names.csv",
     format = "file"
   ),
   tar_target(
@@ -25,7 +25,7 @@ list(
   ),
   tar_target(
     file_vocal_production_learning,
-    "data/vocal-production-learning/parrot_vocalmimic_socioecol.xlsx",
+    "data/vocal_production_learning/parrot_vocalmimic_socioecol.xlsx",
     format = "file"
   ),
 
