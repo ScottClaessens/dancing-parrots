@@ -28,6 +28,11 @@ list(
     "data/vocal_production_learning/parrot_vocalmimic_socioecol.xlsx",
     format = "file"
   ),
+  tar_target(
+    file_sexual_dichromatism,
+    "data/sexual_dichromatism/sexual_dichromatism.csv",
+    format = "file"
+  ),
 
   # load data
   tar_target(
@@ -35,7 +40,8 @@ list(
     load_data(
       file_species_names,
       file_sociality,
-      file_vocal_production_learning
+      file_vocal_production_learning,
+      file_sexual_dichromatism
     )
   )
 
