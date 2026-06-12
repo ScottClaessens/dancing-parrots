@@ -36,7 +36,7 @@ load_data <- function(file_species_names, file_sociality,
     ) |>
     transmute(
       scientific_name = str_replace(scinam, "_", " "),
-      vocal = vocal
+      vocal_production_learning = vocal
     )
 
   # join datasets and return
