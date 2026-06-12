@@ -19,4 +19,4 @@
 **Data dictionary:**
 
 - `scinam` - The scientific name (genus and species names) for the bird species.
-- `sexdic` - Positive real. Amount of sexual dichromatism, proxied as the Euclidean distance in CIELAB colour space between homologous body patches in males and females, averaged across body patches for each species.
+- `sexdic` - Positive real. Amount of sexual dichromatism, proxied as the Euclidean distance in CIELAB colour space between homologous body patches in males and females, averaged across body patches for each species. 0 indicates no dichromatism, increasingly positive numbers indicate larger colour differences between males and females.

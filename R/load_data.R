@@ -5,12 +5,13 @@
 #' @param file_vocal_production_learning Path to data on vocal production
 #'   learning.
 #' @param file_sexual_dichromatism Path to data on sexual dichromatism.
+#' @param file_sexual_size_dimorphism Path to data on sexual size dimorphism.
 #'
 #' @returns A tibble
 #'
 load_data <- function(file_species_names, file_sociality,
-                      file_vocal_production_learning,
-                      file_sexual_dichromatism) {
+                      file_vocal_production_learning, file_sexual_dichromatism,
+                      file_sexual_size_dimorphism) {
 
   # load species names
   species_names <-
@@ -53,6 +54,13 @@ load_data <- function(file_species_names, file_sociality,
       sexual_dichromatism = sexdic
     )
 
+  # load sexual size dimorphism data
+  sexual_size_dimorphism <-
+    read_csv(
+      file = file_sexual_size_dimorphism,
+      show_col_types = FALSE
+    )
+
   # create function to join datasets - first, try linking by scientific name
   # if no match, try linking by genus and species names
   join_datasets <- function(left_df, right_df, variable) {
@@ -79,6 +87,10 @@ load_data <- function(file_species_names, file_sociality,
     join_datasets(
       sexual_dichromatism,
       variable = "sexual_dichromatism"
+    ) |>
+    join_datasets(
+      sexual_size_dimorphism,
+      variable = "sexual_size_dimorphism"
     ) |>
 
     # remove fallback matching column

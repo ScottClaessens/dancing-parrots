@@ -1,8 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 file_birdbase|stem|250907c087577470|ae3093b8e3f00e5a|2c530c1562a7fbd1|-187395558|data/birdbase/birdbase.csv|t20613.5724025223s|s902897b|902897|file|local|vector|||0.333||
-file_sociality|stem|250907c087577470|615460a7544b32b9|2c530c1562a7fbd1|-1318730444|data/sociality/sociality.csv|t20616.404797382s|s902897b|902897|file|local|vector|||0.37||
 file_species_names|stem|4ebbd5873f80d7d8|2d96797cce9890da|2c530c1562a7fbd1|1242704952|data/species_names/species_names.csv|t20613.4905292413s|s16527b|16527|file|local|vector|||0.365||
 file_vocal_production_learning|stem|09b451c57c0097a1|cc5f7d28a3649009|2c530c1562a7fbd1|-775497752|data/vocal_production_learning/parrot_vocalmimic_socioecol.xlsx|t20614.3531024888s|s59079b|59079|file|local|vector|||0||
-file_sexual_dichromatism|stem|2870f80dc962beb7|7d0acb15e8bde623|2c530c1562a7fbd1|1179132687|data/sexual_dichromatism/sexual_dichromatism.csv|t20616.4672463424s|s15893b|15893|file|local|vector|||0.922||
-load_data|function|ce026893f3f73521
-data|stem|1cee1268f3be3d52|eaee1b1ccbf7932c|c01bfbbf3ab89734|33550471||t20616.5411930389s|s14345b|14345|rds|local|vector|||0.329||
+file_sexual_dichromatism|stem|2870f80dc962beb7|7d0acb15e8bde623|2c530c1562a7fbd1|1179132687|data/sexual_dichromatism/sexual_dichromatism.csv|t20616.546335301s|s15893b|15893|file|local|vector|||0.922||
+file_sociality|stem|250907c087577470|615460a7544b32b9|2c530c1562a7fbd1|-1318730444|data/sociality/sociality.csv|t20616.5464424328s|s902897b|902897|file|local|vector|||0.37||
+load_data|function|d78ae1261dd07259
+file_sexual_size_dimorphism|stem|a36a4a5633f85eb4|046cfb1ceb397c19|2c530c1562a7fbd1|-442857465|data/sexual_size_dimorphism/sexual_size_dimorphism.csv|t20616.729371315s|s15700b|15700|file|local|vector|||0.339||
+data|stem|a8fe84389fe54f85|ce4567234383cc58|2e62353de3e6d1ca|33550471||t20616.731088685s|s17403b|17403|rds|local|vector|||0.121||

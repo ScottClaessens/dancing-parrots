@@ -33,6 +33,11 @@ list(
     "data/sexual_dichromatism/sexual_dichromatism.csv",
     format = "file"
   ),
+  tar_target(
+    file_sexual_size_dimorphism,
+    "data/sexual_size_dimorphism/sexual_size_dimorphism.csv",
+    format = "file"
+  ),
 
   # load data
   tar_target(
@@ -41,7 +46,8 @@ list(
       file_species_names,
       file_sociality,
       file_vocal_production_learning,
-      file_sexual_dichromatism
+      file_sexual_dichromatism,
+      file_sexual_size_dimorphism
     )
   )
 
