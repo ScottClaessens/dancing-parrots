@@ -12,7 +12,9 @@ To run this code, you will need to [install R](https://www.r-project.org/) and
 the following R packages:
 
 ```r
-install.packages(c("readxl", "targets", "tidyverse"))
+install.packages(
+  c("colorspace", "data.table", "readxl", "RSQLite", "targets", "tidyverse")
+)
 ```
 
 ### Execute code

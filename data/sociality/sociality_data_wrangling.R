@@ -7,8 +7,8 @@
 # dancing-parrots/data/sociality
 
 options(tidyverse.quiet = TRUE)
-library(readxl)
-library(tidyverse)
+library(readxl)    # v1.4.5
+library(tidyverse) # v2.0.0
 
 # read in full dataset
 d <- readxl::read_xlsx(
