@@ -4,7 +4,7 @@
 #
 # Notes: To run this data wrangling script, download the full BIRDBASE data file
 # from https://doi.org/10.6084/m9.figshare.27051040 and move it to the folder
-# dancing-parrots/data/birdbase
+# dancing-parrots/data/sociality
 
 options(tidyverse.quiet = TRUE)
 library(readxl)
@@ -12,7 +12,7 @@ library(tidyverse)
 
 # read in full dataset
 d <- readxl::read_xlsx(
-  path = "data/birdbase/BIRDBASE v2025.1 Sekercioglu et al. Final.xlsx"
+  path = "data/sociality/BIRDBASE v2025.1 Sekercioglu et al. Final.xlsx"
 )
 
 # wrangle data
@@ -33,7 +33,7 @@ d |>
 
   # write to file
   write.csv(
-    file = "data/birdbase/birdbase.csv",
+    file = "data/sociality/sociality.csv",
     row.names = FALSE
   )
 

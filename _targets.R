@@ -19,8 +19,8 @@ list(
     format = "file"
   ),
   tar_target(
-    file_birdbase,
-    "data/birdbase/birdbase.csv",
+    file_sociality,
+    "data/sociality/sociality.csv",
     format = "file"
   ),
   tar_target(
@@ -34,7 +34,7 @@ list(
     data,
     load_data(
       file_species_names,
-      file_birdbase,
+      file_sociality,
       file_vocal_production_learning
     )
   )
