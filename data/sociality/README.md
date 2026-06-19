@@ -12,9 +12,9 @@
 
 **Date accessed:** 9th June 2026
 
-**Dimensions:** 11589 rows x 6 columns
+**Dimensions:** 11589 rows x 10 columns
 
-**Notes:** To generate `sociality.csv`, download the full BIRDBASE dataset and run the R script `sociality_data_wrangling.R`. The CSV file contains only the relevant columns from BIRDBASE for this study: taxonomic names and the `Social_2` variable.
+**Notes:** To generate `sociality.csv`, download the full BIRDBASE dataset and run the R script `sociality_data_wrangling.R`. The CSV file contains only the relevant columns from BIRDBASE for this study: taxonomic names and variables starting with `Social_`.
 
 **Data dictionary:**
 
@@ -23,4 +23,8 @@
 - `family` - Taxonomic family name. The variable is taken from the `Family IOC 15.1` column in the BIRDBASE dataset.
 - `genus` - Taxonomic genus name. The variable is taken from the `Genus` column in the BIRDBASE dataset.
 - `species` - Taxonomic species name. The variable is taken from the `Species` column in the BIRDBASE dataset.
+- `colonial` - Binary 0/1 integer. If 1, the bird species is colonial. If 0, the bird species is not colonial. If NA, data are missing. The variable is taken from the `Social_1` column in the BIRDBASE dataset.
 - `social` - Binary 0/1 integer. If 1, the bird species is social (i.e., lives with large numbers of birds, mixed species flocks, seasonal flocks of the same species, etc.) If 0, the bird species is not social. If NA, data are missing. The variable is taken from the `Social_2` column in the BIRDBASE dataset.
+- `pairs_and_family_groups` - Binary 0/1 integer. If 1, the bird species lives in pairs and family groups. If 0, the bird species does not live in pairs and family groups. If NA, data are missing. The variable is taken from the `Social_3` column in the BIRDBASE dataset.
+- `singly_and_pairs` - Binary 0/1 integer. If 1, the bird species lives singly and in pairs. If 0, the bird species does not live singly and in pairs. If NA, data are missing. The variable is taken from the `Social_4` column in the BIRDBASE dataset.
+- `solitary` - Binary 0/1 integer. If 1, the bird species is solitary. If 0, the bird species is not solitary. If NA, data are missing. The variable is taken from the `Social_5` column in the BIRDBASE dataset.

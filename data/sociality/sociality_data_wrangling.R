@@ -28,7 +28,11 @@ d |>
     family = `Family IOC 15.1`,
     genus = Genus,
     species = Species,
-    social = parse_integer(Social_2)
+    colonial = parse_integer(Social_1),
+    social = parse_integer(Social_2),
+    pairs_and_family_groups = parse_integer(Social_3),
+    singly_and_pairs = parse_integer(Social_4),
+    solitary = parse_integer(Social_5)
   ) |>
 
   # write to file
