@@ -2,7 +2,7 @@ library(targets)
 tar_source()
 
 tar_option_set(
-  packages = c("readxl", "tidyverse")
+  packages = c("readxl", "tidyverse", "withr")
 )
 
 # pipeline

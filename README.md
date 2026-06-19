@@ -13,7 +13,8 @@ the following R packages:
 
 ```r
 install.packages(
-  c("colorspace", "data.table", "readxl", "RSQLite", "targets", "tidyverse")
+  c("colorspace", "data.table", "readxl", "RSQLite", 
+    "targets", "tidyverse", "withr")
 )
 ```
 
