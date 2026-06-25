@@ -3,6 +3,8 @@
 #' @param file_species_names Path to data on species names.
 #' @param file_sociality_birdbase Path to data on social behaviour from
 #'   BIRDBASE.
+#' @param file_sociality_tobias Path to data on social behaviour from Tobias
+#'   et al. (2016).
 #' @param file_vocal_production_learning Path to data on vocal production
 #'   learning.
 #' @param file_sexual_dichromatism Path to data on sexual dichromatism.
@@ -12,8 +14,9 @@
 #' @returns A tibble
 #'
 load_data <- function(file_species_names, file_sociality_birdbase,
-                      file_vocal_production_learning, file_sexual_dichromatism,
-                      file_sexual_size_dimorphism, file_brain_size) {
+                      file_sociality_tobias, file_vocal_production_learning,
+                      file_sexual_dichromatism, file_sexual_size_dimorphism,
+                      file_brain_size) {
 
   # load species names
   species_names <-
@@ -34,6 +37,42 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     ) |>
     # create fallback column for matching
     mutate(genus_and_species = paste(genus, species))
+
+  # load sociality data from tobias et al. 2016
+  sociality_tobias <-
+    readxl::read_xlsx(
+      path = file_sociality_tobias
+    ) |>
+    transmute(
+      scientific_name = Species,
+      social_bonds = `Social bond`
+    ) |>
+    mutate(
+      sci = scientific_name,
+      scientific_name = case_when(
+        sci == "Amazona mercenaria"          ~ "Amazona mercenarius",
+        sci == "Nandayus nenday"             ~ "Aratinga nenday",
+        sci == "Lophochroa leadbeateri"      ~ "Cacatua leadbeateri",
+        sci == "Aratinga aurea"              ~ "Eupsittula aurea",
+        sci == "Aratinga cactorum"           ~ "Eupsittula cactorum",
+        sci == "Aratinga canicularis"        ~ "Eupsittula canicularis",
+        sci == "Aratinga nana"               ~ "Eupsittula nana",
+        sci == "Aratinga pertinax"           ~ "Eupsittula pertinax",
+        sci == "Guarouba guarouba"           ~ "Guaruba guarouba",
+        sci == "Psephotus chrysopterygius"   ~ "Psephotellus chrysopterygius",
+        sci == "Psephotus dissimilis"        ~ "Psephotellus dissimilis",
+        sci == "Psephotus varius"            ~ "Psephotellus varius",
+        sci == "Aratinga brevipes"           ~ "Psittacara brevipes",
+        sci == "Aratinga erythrogenys"       ~ "Psittacara erythrogenys",
+        sci == "Aratinga euops"              ~ "Psittacara euops",
+        sci == "Aratinga finschi"            ~ "Psittacara finschi",
+        sci == "Aratinga wagleri"            ~ "Psittacara wagleri",
+        sci == "Psitteuteles iris"           ~ "Trichoglossus iris",
+        sci == "Calyptorhynchus baudinii"    ~ "Zanda baudinii",
+        sci == "Calyptorhynchus latirostris" ~ "Zanda latirostris",
+        TRUE ~ sci
+      )
+    )
 
   # load data on vocal production learning
   vocal_production_learning <-
@@ -168,6 +207,10 @@ load_data <- function(file_species_names, file_sociality_birdbase,
   # join datasets
   species_names |>
     left_join(sociality_birdbase, by = "scientific_name") |>
+    join_datasets(
+      sociality_tobias,
+      variable = "social_bonds"
+    ) |>
     join_datasets(
       vocal_production_learning,
       variable = "vocal_production_learning"

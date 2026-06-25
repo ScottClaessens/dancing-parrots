@@ -24,6 +24,11 @@ list(
     format = "file"
   ),
   tar_target(
+    file_sociality_tobias,
+    "data/sociality/tobias_et_al_2016/Data Sheet 3.xlsx",
+    format = "file"
+  ),
+  tar_target(
     file_vocal_production_learning,
     "data/vocal_production_learning/parrot_vocalmimic_socioecol.xlsx",
     format = "file"
@@ -50,6 +55,7 @@ list(
     load_data(
       file_species_names,
       file_sociality_birdbase,
+      file_sociality_tobias,
       file_vocal_production_learning,
       file_sexual_dichromatism,
       file_sexual_size_dimorphism,
