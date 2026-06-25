@@ -19,8 +19,8 @@ list(
     format = "file"
   ),
   tar_target(
-    file_sociality,
-    "data/sociality/sociality.csv",
+    file_sociality_birdbase,
+    "data/sociality/birdbase/sociality_birdbase.csv",
     format = "file"
   ),
   tar_target(
@@ -49,7 +49,7 @@ list(
     data,
     load_data(
       file_species_names,
-      file_sociality,
+      file_sociality_birdbase,
       file_vocal_production_learning,
       file_sexual_dichromatism,
       file_sexual_size_dimorphism,

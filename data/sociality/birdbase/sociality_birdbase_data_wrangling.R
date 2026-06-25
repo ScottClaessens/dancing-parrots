@@ -1,10 +1,10 @@
-# Title: R script to generate sociality.csv
+# Title: R script to generate sociality_birdbase.csv
 #
 # Author: Scott Claessens
 #
 # Notes: To run this data wrangling script, download the full BIRDBASE data file
 # from https://doi.org/10.6084/m9.figshare.27051040 and move it to the folder
-# dancing-parrots/data/sociality
+# dancing-parrots/data/sociality/birdbase
 
 options(tidyverse.quiet = TRUE)
 library(readxl)    # v1.4.5
@@ -12,7 +12,10 @@ library(tidyverse) # v2.0.0
 
 # read in full dataset
 d <- readxl::read_xlsx(
-  path = "data/sociality/BIRDBASE v2025.1 Sekercioglu et al. Final.xlsx"
+  path = paste0(
+    "data/sociality/birdbase/",
+    "BIRDBASE v2025.1 Sekercioglu et al. Final.xlsx"
+  )
 )
 
 # wrangle data
@@ -37,7 +40,7 @@ d |>
 
   # write to file
   write.csv(
-    file = "data/sociality/sociality.csv",
+    file = "data/sociality/birdbase/sociality_birdbase.csv",
     row.names = FALSE
   )
 

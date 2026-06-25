@@ -1,7 +1,8 @@
 #' Load and wrangle data for parrot species
 #'
 #' @param file_species_names Path to data on species names.
-#' @param file_sociality Path to data on social behaviour from BIRDBASE.
+#' @param file_sociality_birdbase Path to data on social behaviour from
+#'   BIRDBASE.
 #' @param file_vocal_production_learning Path to data on vocal production
 #'   learning.
 #' @param file_sexual_dichromatism Path to data on sexual dichromatism.
@@ -10,7 +11,7 @@
 #'
 #' @returns A tibble
 #'
-load_data <- function(file_species_names, file_sociality,
+load_data <- function(file_species_names, file_sociality_birdbase,
                       file_vocal_production_learning, file_sexual_dichromatism,
                       file_sexual_size_dimorphism, file_brain_size) {
 
@@ -25,10 +26,10 @@ load_data <- function(file_species_names, file_sociality,
       common_name = str_to_sentence(`English Common Name`)
     )
 
-  # load sociality data
-  sociality <-
+  # load sociality data from birdbase
+  sociality_birdbase <-
     read_csv(
-      file = file_sociality,
+      file = file_sociality_birdbase,
       show_col_types = FALSE
     ) |>
     # create fallback column for matching
@@ -166,7 +167,7 @@ load_data <- function(file_species_names, file_sociality,
 
   # join datasets
   species_names |>
-    left_join(sociality, by = "scientific_name") |>
+    left_join(sociality_birdbase, by = "scientific_name") |>
     join_datasets(
       vocal_production_learning,
       variable = "vocal_production_learning"

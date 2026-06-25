@@ -6,5 +6,6 @@ file_sexual_dichromatism|stem|2870f80dc962beb7|7d0acb15e8bde623|2c530c1562a7fbd1
 file_sexual_size_dimorphism|stem|a36a4a5633f85eb4|046cfb1ceb397c19|2c530c1562a7fbd1|-442857465|data/sexual_size_dimorphism/sexual_size_dimorphism.csv|t20616.729371315s|s15700b|15700|file|local|vector|||0.339||
 file_sociality|stem|57d90ecb04c9c888|615460a7544b32b9|2c530c1562a7fbd1|-1318730444|data/sociality/sociality.csv|t20623.3676231759s|s1015432b|1015432|file|local|vector|||0.941||
 file_brain_size|stem|4f399384f6a82ec9|f5785e25bc3ea81e|2c530c1562a7fbd1|-1660094594|data/brain_size/brain_size.csv|t20623.3747337963s|s87860b|87860|file|local|vector|||1.067||
-data|stem|5a97d38cf9ce39c8|3786ab4048ce5c6e|e93830483c374207|33550471||t20623.4985259227s|s20992b|20992|rds|local|vector|||0.743||
-load_data|function|f0404700790ed490
+load_data|function|f0872ddd47da27c4
+file_sociality_birdbase|stem|57d90ecb04c9c888|3a560ae0032f77fd|2c530c1562a7fbd1|-1053097278|data/sociality/birdbase/sociality_birdbase.csv|t20629.5457521434s|s1015432b|1015432|file|local|vector|||0.37||
+data|stem|5a97d38cf9ce39c8|037e657278a80d9f|1953f60705b3d03c|33550471||t20629.547112765s|s20992b|20992|rds|local|vector|||0.806||

@@ -1,6 +1,6 @@
-# Information on dataset `sociality.csv`
+# Information on dataset `sociality_birdbase.csv`
 
-**File name:** `sociality.csv`
+**File name:** `sociality_birdbase.csv`
 
 **Title:** Data on social behaviour for 11589 bird species from the database BIRDBASE
 
@@ -14,7 +14,7 @@
 
 **Dimensions:** 11589 rows x 10 columns
 
-**Notes:** To generate `sociality.csv`, download the full BIRDBASE dataset and run the R script `sociality_data_wrangling.R`. The CSV file contains only the relevant columns from BIRDBASE for this study: taxonomic names and variables starting with `Social_`.
+**Notes:** To generate `sociality_birdbase.csv`, download the full BIRDBASE dataset and run the R script `sociality_birdbase_data_wrangling.R`. The CSV file contains only the relevant columns from BIRDBASE for this study: taxonomic names and variables starting with `Social_`.
 
 **Data dictionary:**
 
