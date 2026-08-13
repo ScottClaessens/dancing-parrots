@@ -204,6 +204,28 @@ load_data <- function(file_species_names, file_sociality_birdbase,
 
   }
 
+  # create function to convert binary variable to absent/present factor
+  convert_binary <- function(x) {
+    factor(
+      ifelse(x == 0, "Absent", "Present"),
+      levels = c("Absent", "Present")
+    )
+  }
+
+  # create function to convert social_bonds variable to ordered factor
+  convert_ordered <- function(x) {
+    ordered(
+      case_when(
+        x == 1 ~ "Solitary",
+        x == 2 ~ "Short-term pair/group bond",
+        x == 3 ~ "Long-term pair/group bond",
+        is.na(x) ~ NA
+      ),
+      levels = c("Solitary", "Short-term pair/group bond",
+                 "Long-term pair/group bond")
+    )
+  }
+
   # join datasets
   species_names |>
     left_join(sociality_birdbase, by = "scientific_name") |>
@@ -233,6 +255,17 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     ) |>
 
     # remove fallback matching column
-    dplyr::select(!genus_and_species)
+    dplyr::select(!genus_and_species) |>
+
+    # edit categorical columns to reflect (ordered) factor levels
+    mutate(
+      colonial                  = convert_binary(colonial),
+      social                    = convert_binary(social),
+      pairs_and_family_groups   = convert_binary(pairs_and_family_groups),
+      singly_and_pairs          = convert_binary(singly_and_pairs),
+      solitary                  = convert_binary(solitary),
+      social_bonds              = convert_ordered(social_bonds),
+      vocal_production_learning = convert_binary(vocal_production_learning)
+    )
 
 }

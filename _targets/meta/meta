@@ -8,5 +8,5 @@ file_sociality|stem|57d90ecb04c9c888|615460a7544b32b9|2c530c1562a7fbd1|-13187304
 file_brain_size|stem|4f399384f6a82ec9|f5785e25bc3ea81e|2c530c1562a7fbd1|-1660094594|data/brain_size/brain_size.csv|t20623.3747337963s|s87860b|87860|file|local|vector|||1.067||
 file_sociality_birdbase|stem|57d90ecb04c9c888|3a560ae0032f77fd|2c530c1562a7fbd1|-1053097278|data/sociality/birdbase/sociality_birdbase.csv|t20629.5457521434s|s1015432b|1015432|file|local|vector|||0.37||
 file_sociality_tobias|stem|4c15289196582446|e12997b019f4b76f|2c530c1562a7fbd1|-1126249620|data/sociality/tobias_et_al_2016/Data Sheet 3.xlsx|t20629.5498594638s|s792806b|792806|file|local|vector|||0.467||
-data|stem|df4cdd2d3dfb7683|843f0b6822007d56|ff1588cd479429fe|33550471||t20629.727693858s|s21120b|21120|rds|local|vector|||0.842|Expecting numeric in H2860 / R2860C8: got 'u'|
-load_data|function|570a8e8b053bd1f3
+data|stem|ad8cfcc23c9a8a9b|843f0b6822007d56|aa4f5cc400b47f79|33550471||t20678.4288583839s|s21045b|21045|rds|local|vector|||0.514|Expecting numeric in H2860 / R2860C8: got 'u'|
+load_data|function|74124575b13433e3
