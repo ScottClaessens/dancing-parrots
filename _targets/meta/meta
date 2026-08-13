@@ -7,5 +7,6 @@ file_sociality_birdbase|stem|57d90ecb04c9c888|3a560ae0032f77fd|2c530c1562a7fbd1|
 file_sociality_tobias|stem|4c15289196582446|e12997b019f4b76f|2c530c1562a7fbd1|-1126249620|data/sociality/tobias_et_al_2016/Data Sheet 3.xlsx|t20629.5498594638s|s792806b|792806|file|local|vector|||0.467||
 file_brain_size_hooper|stem|4f399384f6a82ec9|fee8a17202f81e46|2c530c1562a7fbd1|-1525753537|data/brain_size/hooper_et_al_2022/brain_size.csv|t20623.3747337963s|s87860b|87860|file|local|vector|||0.364||
 file_brain_size_hardie|stem|c3f251cb086793a5|bf5c12cbebad581f|2c530c1562a7fbd1|-41481545|data/brain_size/hardie_cooney_2023/Brain_data.csv|t20678.4362084904s|s334691b|334691|file|local|vector|||0.962||
-data|stem|909ba429ab32e0af|5a3f6097bf9e3daf|6e48166d97225e5f|33550471||t20678.4821679538s|s21384b|21384|rds|local|vector|||0.689|Expecting numeric in H2860 / R2860C8: got 'u'|
-load_data|function|ebbbd0200cfedaa6
+file_brain_size_tsuboi|stem|53861af4e7ed81c1|19b82e522435fe91|2c530c1562a7fbd1|1205438584|data/brain_size/tsuboi_et_al_2018/Tsuboi_etal_NEE_bird.xlsx|t20678.4913596109s|s1126942b|1126942|file|local|vector|||1.044||
+data|stem|7af8f5fa8f9ca4ec|17ad3e80d5e6b670|2c31f0cde66eaf5e|33550471||t20678.6068198619s|s21724b|21724|rds|local|vector|||1.57|Expecting numeric in H2860 / R2860C8: got 'u'|
+load_data|function|ec946b06494af56e

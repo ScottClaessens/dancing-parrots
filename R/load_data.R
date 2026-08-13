@@ -13,13 +13,16 @@
 #'   (2022).
 #' @param file_brain_size_hardie Path to data on brain size from Hardie and
 #'   Cooney (2023).
+#' @param file_brain_size_tsuboi Path to data on brain size from Tsuboi et al.
+#'   (2018).
 #'
 #' @returns A tibble
 #'
 load_data <- function(file_species_names, file_sociality_birdbase,
                       file_sociality_tobias, file_vocal_production_learning,
                       file_sexual_dichromatism, file_sexual_size_dimorphism,
-                      file_brain_size_hooper, file_brain_size_hardie) {
+                      file_brain_size_hooper, file_brain_size_hardie,
+                      file_brain_size_tsuboi) {
 
   # load species names
   species_names <-
@@ -213,6 +216,30 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     dplyr::select(!log_neuron) |>
     rename_with(\(x) ifelse(x != "scientific_name", paste0(x, "_hardie"), x))
 
+  # load brain size data from Tsuboi et al. (2018)
+  # and calculate neuronal counts following the same process as above
+  neuron_counts_tsuboi <-
+    readxl::read_xlsx(
+      path = file_brain_size_tsuboi
+    ) |>
+    rowwise() |>
+    transmute(
+      scientific_name = str_replace(Genus_Species, "_", " "),
+      brain_mass = ifelse(
+        Method == "Mass", `Brain mass (g)`, `Brain Volume (ml)` * 1.036
+      ),
+      log_neuron = list(
+        log((brain_mass / (2.669 * 10^-10))^(1 / exponent))
+      )
+    ) |>
+    group_by(scientific_name) |>
+    summarise(
+      log_neuron_count = mean(unlist(log_neuron), na.rm = TRUE),
+      log_neuron_count_sd = sd(unlist(log_neuron), na.rm = TRUE)
+    ) |>
+    ungroup() |>
+    rename_with(\(x) ifelse(x != "scientific_name", paste0(x, "_tsuboi"), x))
+
   # create function to join datasets - first, try linking by scientific name
   # if no match, try linking by genus and species names
   join_datasets <- function(left_df, right_df, variable) {
@@ -269,6 +296,10 @@ load_data <- function(file_species_names, file_sociality_birdbase,
                   variable = "log_neuron_count_hardie") |>
     join_datasets(neuron_counts_hardie,
                   variable = "log_neuron_count_sd_hardie") |>
+    join_datasets(neuron_counts_tsuboi,
+                  variable = "log_neuron_count_tsuboi") |>
+    join_datasets(neuron_counts_tsuboi,
+                  variable = "log_neuron_count_sd_tsuboi") |>
 
     # remove fallback matching column
     dplyr::select(!genus_and_species) |>
@@ -284,20 +315,24 @@ load_data <- function(file_species_names, file_sociality_birdbase,
       vocal_production_learning = convert_binary(vocal_production_learning)
     ) |>
 
-    # for neuronal count data, prioritise Hooper et al. (2022) and use Hardie
-    # and Cooney (2023) as a fallback
+    # for neuronal count data, prioritise Hooper et al. (2022), else use Hardie
+    # and Cooney (2023), else use Tsuboi et al. (2018)
     mutate(
-      log_neuron_count = ifelse(
-        !is.na(log_neuron_count_hooper),
-        log_neuron_count_hooper,
-        log_neuron_count_hardie
+      log_neuron_count = case_when(
+        !is.na(log_neuron_count_hooper) ~ log_neuron_count_hooper,
+        !is.na(log_neuron_count_hardie) ~ log_neuron_count_hardie,
+        !is.na(log_neuron_count_tsuboi) ~ log_neuron_count_tsuboi,
+        TRUE ~ NA
       ),
-      log_neuron_count_sd = ifelse(
-        !is.na(log_neuron_count_sd_hooper),
-        log_neuron_count_sd_hooper,
-        log_neuron_count_sd_hardie
+      log_neuron_count_sd = case_when(
+        !is.na(log_neuron_count_sd_hooper) ~ log_neuron_count_sd_hooper,
+        !is.na(log_neuron_count_sd_hardie) ~ log_neuron_count_sd_hardie,
+        !is.na(log_neuron_count_sd_tsuboi) ~ log_neuron_count_sd_tsuboi,
+        TRUE ~ NA
       )
     ) |>
-    dplyr::select(!(ends_with("_hooper") | ends_with("hardie")))
+    dplyr::select(
+      !(ends_with("_hooper") | ends_with("hardie") | ends_with("tsuboi"))
+    )
 
 }

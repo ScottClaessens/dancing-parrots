@@ -53,6 +53,11 @@ list(
     "data/brain_size/hardie_cooney_2023/Brain_data.csv",
     format = "file"
   ),
+  tar_target(
+    file_brain_size_tsuboi,
+    "data/brain_size/tsuboi_et_al_2018/Tsuboi_etal_NEE_bird.xlsx",
+    format = "file"
+  ),
 
   # load data
   tar_target(
@@ -65,7 +70,8 @@ list(
       file_sexual_dichromatism,
       file_sexual_size_dimorphism,
       file_brain_size_hooper,
-      file_brain_size_hardie
+      file_brain_size_hardie,
+      file_brain_size_tsuboi
     )
   )
 
