@@ -1,5 +1,8 @@
 #' Load and wrangle data for parrot species
 #'
+#' The functions loads various datasets from the /data directory, wrangles them,
+#' and joins them together to produce the primary dataset for the study.
+#'
 #' @param file_species_names Path to data on species names.
 #' @param file_sociality_birdbase Path to data on social behaviour from
 #'   BIRDBASE.
@@ -16,7 +19,54 @@
 #' @param file_brain_size_tsuboi Path to data on brain size from Tsuboi et al.
 #'   (2018).
 #'
-#' @returns A tibble
+#' @returns A tibble with 406 rows and 17 columns:
+#'   \describe{
+#'     \item{scientific_name}{Character. The scientific name (genus and species
+#'       names) for the species.}
+#'     \item{common_name}{Character. Common name for the species.}
+#'     \item{order}{Character. Taxonomic order name.}
+#'     \item{family}{Character. Taxonomic family name.}
+#'     \item{genus}{Character. Taxonomic genus name.}
+#'     \item{species}{Character. Taxonomic species name.}
+#'     \item{colonial}{Factor. Absence/presence of colonial nesting. Taken from
+#'       BIRDBASE.}
+#'     \item{social}{Factor. Absence/presence of sociality (i.e., living with
+#'       large numbers of birds, mixed species flocks, seasonal flocks of the
+#'       same species). Taken from BIRDBASE.}
+#'     \item{pairs_and_family_groups}{Factor. Absence/presence of living in
+#'       pairs and family groups. Taken from BIRDBASE.}
+#'     \item{singly_and_pairs}{Factor. Absence/presence of living singly and in
+#'       pairs. Taken from BIRDBASE.}
+#'     \item{solitary}{Factor. Absence/presence of solitary living. Taken from
+#'       BIRDBASE.}
+#'     \item{social_bonds}{Ordered factor. Degree of social bonds (solitary,
+#'       short-term pair/group bond, or long-term pair/group bond). Taken from
+#'       Tobias et al. (2016).}
+#'     \item{vocal_production_learning}{Factor. Presence/absence of vocal
+#'       production learning. Taken from Krasheninnikova et al. (2024).}
+#'     \item{sexual_dichromatism}{Positive real. Amount of sexual dichromatism,
+#'       proxied as the Euclidean distance in CIELAB colour space between
+#'       homologous body patches in males and females, averaged across body
+#'       patches for each species. 0 indicates no dichromatism, increasingly
+#'       positive numbers indicate larger colour differences between males and
+#'       females. Taken from Carballo et al. (2020).}
+#'     \item{sexual_size_dimorphism}{Positive real. Amount of sexual dimorphism
+#'       in body size, proxied as absolute differences between male and female
+#'       values on a principal component capturing wing size, tarsus size, and
+#'       tail size. 0 indicates no dimorphism, increasingly positive numbers
+#'       indicate larger differences in body size between males and females.}
+#'     \item{log_neuron_count}{Numeric. Estimated (or observed) neuron counts
+#'       for species on the log scale. Neuron counts are estimated by converting
+#'       brain mass measurements following a scaling equation outlined in Sol et
+#'       al. (2010). Taken from Hooper et al. (2022), Hardie and Cooney (2023),
+#'       or Tsuboi et al. (2018).}
+#'     \item{log_neuron_count_sd}{Positive real. Measurement error for the log
+#'       neuron count estimate, represented as a standard deviation. The
+#'       standard deviation encodes variation across brain size datasets,
+#'       variation across specimens, and/or error due to uncertainty in the
+#'       exponent from the scaling equation in Sol et al. (2010). SDs are set
+#'       to 1e-07 for 11 species with observed neuronal counts.}
+#'   }
 #'
 load_data <- function(file_species_names, file_sociality_birdbase,
                       file_sociality_tobias, file_vocal_production_learning,
