@@ -9,14 +9,17 @@
 #'   learning.
 #' @param file_sexual_dichromatism Path to data on sexual dichromatism.
 #' @param file_sexual_size_dimorphism Path to data on sexual size dimorphism.
-#' @param file_brain_size Path to data on brain size.
+#' @param file_brain_size_hooper Path to data on brain size from Hooper et al.
+#'   (2022).
+#' @param file_brain_size_hardie Path to data on brain size from Hardie and
+#'   Cooney (2023).
 #'
 #' @returns A tibble
 #'
 load_data <- function(file_species_names, file_sociality_birdbase,
                       file_sociality_tobias, file_vocal_production_learning,
                       file_sexual_dichromatism, file_sexual_size_dimorphism,
-                      file_brain_size) {
+                      file_brain_size_hooper, file_brain_size_hardie) {
 
   # load species names
   species_names <-
@@ -38,7 +41,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     # create fallback column for matching
     mutate(genus_and_species = paste(genus, species))
 
-  # load sociality data from tobias et al. 2016
+  # load sociality data from Tobias et al. 2016
   sociality_tobias <-
     readxl::read_xlsx(
       path = file_sociality_tobias
@@ -108,10 +111,10 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     exponent <- rnorm(1000, 1.144, (1.144 - 1.020) / 1.96)
   })
 
-  # load brain size data and calculate neuronal counts
-  neuron_counts <-
+  # load brain size data from Hooper et al. (2022) and calculate neuronal counts
+  neuron_counts_hooper <-
     read_csv(
-      file = file_brain_size,
+      file = file_brain_size_hooper,
       show_col_types = FALSE
     ) |>
     mutate(scientific_name = str_replace(Species, "_", " ")) |>
@@ -186,7 +189,29 @@ load_data <- function(file_species_names, file_sociality_birdbase,
         log_neuron_count = log(1160.59 * 10^6),
         log_neuron_count_sd = 1e-07
       )
-    )
+    ) |>
+    # rename columns for matching later
+    rename_with(\(x) ifelse(x != "scientific_name", paste0(x, "_hooper"), x))
+
+  # load brain size data from Hardie and Cooney (2023)
+  # and calculate neuronal counts following the same process as above
+  neuron_counts_hardie <-
+    read_csv(
+      file = file_brain_size_hardie,
+      show_col_types = FALSE
+    ) |>
+    rowwise() |>
+    transmute(
+      scientific_name = str_replace(TipLabel, "_", " "),
+      brain_mass = Brain_Size_mL * 1.036,
+      log_neuron = list(
+        log((brain_mass / (2.669 * 10^-10))^(1 / exponent))
+      ),
+      log_neuron_count = mean(unlist(log_neuron), na.rm = TRUE),
+      log_neuron_count_sd = sd(unlist(log_neuron), na.rm = TRUE)
+    ) |>
+    dplyr::select(!log_neuron) |>
+    rename_with(\(x) ifelse(x != "scientific_name", paste0(x, "_hardie"), x))
 
   # create function to join datasets - first, try linking by scientific name
   # if no match, try linking by genus and species names
@@ -229,30 +254,21 @@ load_data <- function(file_species_names, file_sociality_birdbase,
   # join datasets
   species_names |>
     left_join(sociality_birdbase, by = "scientific_name") |>
-    join_datasets(
-      sociality_tobias,
-      variable = "social_bonds"
-    ) |>
-    join_datasets(
-      vocal_production_learning,
-      variable = "vocal_production_learning"
-    ) |>
-    join_datasets(
-      sexual_dichromatism,
-      variable = "sexual_dichromatism"
-    ) |>
-    join_datasets(
-      sexual_size_dimorphism,
-      variable = "sexual_size_dimorphism"
-    ) |>
-    join_datasets(
-      neuron_counts,
-      variable = "log_neuron_count"
-    ) |>
-    join_datasets(
-      neuron_counts,
-      variable = "log_neuron_count_sd"
-    ) |>
+    join_datasets(sociality_tobias, variable = "social_bonds") |>
+    join_datasets(vocal_production_learning,
+                  variable = "vocal_production_learning") |>
+    join_datasets(sexual_dichromatism,
+                  variable = "sexual_dichromatism") |>
+    join_datasets(sexual_size_dimorphism,
+                  variable = "sexual_size_dimorphism") |>
+    join_datasets(neuron_counts_hooper,
+                  variable = "log_neuron_count_hooper") |>
+    join_datasets(neuron_counts_hooper,
+                  variable = "log_neuron_count_sd_hooper") |>
+    join_datasets(neuron_counts_hardie,
+                  variable = "log_neuron_count_hardie") |>
+    join_datasets(neuron_counts_hardie,
+                  variable = "log_neuron_count_sd_hardie") |>
 
     # remove fallback matching column
     dplyr::select(!genus_and_species) |>
@@ -266,6 +282,22 @@ load_data <- function(file_species_names, file_sociality_birdbase,
       solitary                  = convert_binary(solitary),
       social_bonds              = convert_ordered(social_bonds),
       vocal_production_learning = convert_binary(vocal_production_learning)
-    )
+    ) |>
+
+    # for neuronal count data, prioritise Hooper et al. (2022) and use Hardie
+    # and Cooney (2023) as a fallback
+    mutate(
+      log_neuron_count = ifelse(
+        !is.na(log_neuron_count_hooper),
+        log_neuron_count_hooper,
+        log_neuron_count_hardie
+      ),
+      log_neuron_count_sd = ifelse(
+        !is.na(log_neuron_count_sd_hooper),
+        log_neuron_count_sd_hooper,
+        log_neuron_count_sd_hardie
+      )
+    ) |>
+    dplyr::select(!(ends_with("_hooper") | ends_with("hardie")))
 
 }

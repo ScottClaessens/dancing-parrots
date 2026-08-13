@@ -44,8 +44,13 @@ list(
     format = "file"
   ),
   tar_target(
-    file_brain_size,
-    "data/brain_size/brain_size.csv",
+    file_brain_size_hooper,
+    "data/brain_size/hooper_et_al_2022/brain_size.csv",
+    format = "file"
+  ),
+  tar_target(
+    file_brain_size_hardie,
+    "data/brain_size/hardie_cooney_2023/Brain_data.csv",
     format = "file"
   ),
 
@@ -59,7 +64,8 @@ list(
       file_vocal_production_learning,
       file_sexual_dichromatism,
       file_sexual_size_dimorphism,
-      file_brain_size
+      file_brain_size_hooper,
+      file_brain_size_hardie
     )
   )
 

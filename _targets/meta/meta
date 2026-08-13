@@ -1,12 +1,11 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-file_birdbase|stem|250907c087577470|ae3093b8e3f00e5a|2c530c1562a7fbd1|-187395558|data/birdbase/birdbase.csv|t20613.5724025223s|s902897b|902897|file|local|vector|||0.333||
 file_species_names|stem|4ebbd5873f80d7d8|2d96797cce9890da|2c530c1562a7fbd1|1242704952|data/species_names/species_names.csv|t20613.4905292413s|s16527b|16527|file|local|vector|||0.365||
 file_vocal_production_learning|stem|09b451c57c0097a1|cc5f7d28a3649009|2c530c1562a7fbd1|-775497752|data/vocal_production_learning/parrot_vocalmimic_socioecol.xlsx|t20614.3531024888s|s59079b|59079|file|local|vector|||0||
 file_sexual_dichromatism|stem|2870f80dc962beb7|7d0acb15e8bde623|2c530c1562a7fbd1|1179132687|data/sexual_dichromatism/sexual_dichromatism.csv|t20616.546335301s|s15893b|15893|file|local|vector|||0.922||
 file_sexual_size_dimorphism|stem|a36a4a5633f85eb4|046cfb1ceb397c19|2c530c1562a7fbd1|-442857465|data/sexual_size_dimorphism/sexual_size_dimorphism.csv|t20616.729371315s|s15700b|15700|file|local|vector|||0.339||
-file_sociality|stem|57d90ecb04c9c888|615460a7544b32b9|2c530c1562a7fbd1|-1318730444|data/sociality/sociality.csv|t20623.3676231759s|s1015432b|1015432|file|local|vector|||0.941||
-file_brain_size|stem|4f399384f6a82ec9|f5785e25bc3ea81e|2c530c1562a7fbd1|-1660094594|data/brain_size/brain_size.csv|t20623.3747337963s|s87860b|87860|file|local|vector|||1.067||
 file_sociality_birdbase|stem|57d90ecb04c9c888|3a560ae0032f77fd|2c530c1562a7fbd1|-1053097278|data/sociality/birdbase/sociality_birdbase.csv|t20629.5457521434s|s1015432b|1015432|file|local|vector|||0.37||
 file_sociality_tobias|stem|4c15289196582446|e12997b019f4b76f|2c530c1562a7fbd1|-1126249620|data/sociality/tobias_et_al_2016/Data Sheet 3.xlsx|t20629.5498594638s|s792806b|792806|file|local|vector|||0.467||
-data|stem|ad8cfcc23c9a8a9b|843f0b6822007d56|aa4f5cc400b47f79|33550471||t20678.4288583839s|s21045b|21045|rds|local|vector|||0.514|Expecting numeric in H2860 / R2860C8: got 'u'|
-load_data|function|74124575b13433e3
+file_brain_size_hooper|stem|4f399384f6a82ec9|fee8a17202f81e46|2c530c1562a7fbd1|-1525753537|data/brain_size/hooper_et_al_2022/brain_size.csv|t20623.3747337963s|s87860b|87860|file|local|vector|||0.364||
+file_brain_size_hardie|stem|c3f251cb086793a5|bf5c12cbebad581f|2c530c1562a7fbd1|-41481545|data/brain_size/hardie_cooney_2023/Brain_data.csv|t20678.4362084904s|s334691b|334691|file|local|vector|||0.962||
+data|stem|909ba429ab32e0af|5a3f6097bf9e3daf|6e48166d97225e5f|33550471||t20678.4821679538s|s21384b|21384|rds|local|vector|||0.689|Expecting numeric in H2860 / R2860C8: got 'u'|
+load_data|function|ebbbd0200cfedaa6
