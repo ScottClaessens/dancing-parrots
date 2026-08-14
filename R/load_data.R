@@ -100,34 +100,8 @@ load_data <- function(file_species_names, file_sociality_birdbase,
       path = file_sociality_tobias
     ) |>
     transmute(
-      scientific_name = Species,
+      scientific_name = standardise_scientific_names(Species),
       social_bonds = `Social bond`
-    ) |>
-    mutate(
-      sci = scientific_name,
-      scientific_name = case_when(
-        sci == "Amazona mercenaria"          ~ "Amazona mercenarius",
-        sci == "Nandayus nenday"             ~ "Aratinga nenday",
-        sci == "Lophochroa leadbeateri"      ~ "Cacatua leadbeateri",
-        sci == "Aratinga aurea"              ~ "Eupsittula aurea",
-        sci == "Aratinga cactorum"           ~ "Eupsittula cactorum",
-        sci == "Aratinga canicularis"        ~ "Eupsittula canicularis",
-        sci == "Aratinga nana"               ~ "Eupsittula nana",
-        sci == "Aratinga pertinax"           ~ "Eupsittula pertinax",
-        sci == "Guarouba guarouba"           ~ "Guaruba guarouba",
-        sci == "Psephotus chrysopterygius"   ~ "Psephotellus chrysopterygius",
-        sci == "Psephotus dissimilis"        ~ "Psephotellus dissimilis",
-        sci == "Psephotus varius"            ~ "Psephotellus varius",
-        sci == "Aratinga brevipes"           ~ "Psittacara brevipes",
-        sci == "Aratinga erythrogenys"       ~ "Psittacara erythrogenys",
-        sci == "Aratinga euops"              ~ "Psittacara euops",
-        sci == "Aratinga finschi"            ~ "Psittacara finschi",
-        sci == "Aratinga wagleri"            ~ "Psittacara wagleri",
-        sci == "Psitteuteles iris"           ~ "Trichoglossus iris",
-        sci == "Calyptorhynchus baudinii"    ~ "Zanda baudinii",
-        sci == "Calyptorhynchus latirostris" ~ "Zanda latirostris",
-        TRUE ~ sci
-      )
     )
 
   # load data on vocal production learning
@@ -136,7 +110,9 @@ load_data <- function(file_species_names, file_sociality_birdbase,
       path = file_vocal_production_learning
     ) |>
     transmute(
-      scientific_name = str_replace(scinam, "_", " "),
+      scientific_name = standardise_scientific_names(
+        str_replace(scinam, "_", " ")
+      ),
       vocal_production_learning = vocal
     )
 
@@ -146,8 +122,8 @@ load_data <- function(file_species_names, file_sociality_birdbase,
       file = file_sexual_dichromatism,
       show_col_types = FALSE
     ) |>
-    rename(
-      scientific_name = scinam,
+    transmute(
+      scientific_name = standardise_scientific_names(scinam),
       sexual_dichromatism = sexdic
     )
 
@@ -156,7 +132,8 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     read_csv(
       file = file_sexual_size_dimorphism,
       show_col_types = FALSE
-    )
+    ) |>
+    mutate(scientific_name = standardise_scientific_names(scientific_name))
 
   # get bootstrapped exponent for brain volume to neuron count conversion
   # (see Table S2 in https://doi.org/10.1371/journal.pone.0009617)
@@ -170,7 +147,11 @@ load_data <- function(file_species_names, file_sociality_birdbase,
       file = file_brain_size_hooper,
       show_col_types = FALSE
     ) |>
-    mutate(scientific_name = str_replace(Species, "_", " ")) |>
+    mutate(
+      scientific_name = standardise_scientific_names(
+        str_replace(Species, "_", " ")
+      )
+    ) |>
     dplyr::select(!Species) |>
     pivot_longer(
       cols = !scientific_name,
@@ -255,7 +236,9 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     ) |>
     rowwise() |>
     transmute(
-      scientific_name = str_replace(TipLabel, "_", " "),
+      scientific_name = standardise_scientific_names(
+        str_replace(TipLabel, "_", " ")
+      ),
       brain_mass = Brain_Size_mL * 1.036,
       log_neuron = list(
         log((brain_mass / (2.669 * 10^-10))^(1 / exponent))
@@ -274,7 +257,9 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     ) |>
     rowwise() |>
     transmute(
-      scientific_name = str_replace(Genus_Species, "_", " "),
+      scientific_name = standardise_scientific_names(
+        str_replace(Genus_Species, "_", " ")
+      ),
       brain_mass = ifelse(
         Method == "Mass", `Brain mass (g)`, `Brain Volume (ml)` * 1.036
       ),
@@ -331,7 +316,8 @@ load_data <- function(file_species_names, file_sociality_birdbase,
   # join datasets
   species_names |>
     left_join(sociality_birdbase, by = "scientific_name") |>
-    join_datasets(sociality_tobias, variable = "social_bonds") |>
+    join_datasets(sociality_tobias,
+                  variable = "social_bonds") |>
     join_datasets(vocal_production_learning,
                   variable = "vocal_production_learning") |>
     join_datasets(sexual_dichromatism,
