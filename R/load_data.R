@@ -136,7 +136,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     mutate(scientific_name = standardise_scientific_names(scientific_name))
 
   # get bootstrapped exponent for brain volume to neuron count conversion
-  # (see Table S2 in https://doi.org/10.1371/journal.pone.0009617)
+  # (see Table S2 in https://doi.org/10.1073/pnas.1517131113)
   withr::with_seed(1, {
     exponent <- rnorm(1000, 1.144, (1.144 - 1.020) / 1.96)
   })
@@ -152,6 +152,18 @@ load_data <- function(file_species_names, file_sociality_birdbase,
         str_replace(Species, "_", " ")
       )
     ) |>
+
+    # fix data input issue for one species (Cyanoliseus patagonus)
+    # brain volume = 80.23 ml, should be 8.23 ml
+    mutate(
+      IwaniukDeanNelsonLog = ifelse(
+        scientific_name == "Cyanoliseus patagonus",
+        log(8.23),
+        IwaniukDeanNelsonLog
+      )
+    ) |>
+
+    # pivot longer
     dplyr::select(!Species) |>
     pivot_longer(
       cols = !scientific_name,
@@ -169,7 +181,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
 
     # convert to log numbers of neurons by using scaling formula for parrots:
     # brain mass = 2.669 * 10^-10 * neurons^1.144
-    # (see Table S2 in https://doi.org/10.1371/journal.pone.0009617)
+    # (see Table S2 in https://doi.org/10.1073/pnas.1517131113)
     # we use bayesian-like bootstrapping to account for uncertainty in exponent
     rowwise() |>
     mutate(
@@ -190,7 +202,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     rename(log_neuron_count = log_neuron_count_mean) |>
 
     # manually add in observed average neuron counts for 11 parrot species
-    # (see Table S1 in https://doi.org/10.1371/journal.pone.0009617)
+    # (see Table S1 in https://doi.org/10.1073/pnas.1517131113)
     mutate(
       log_neuron_count = case_when(
         scientific_name == "Forpus passerinus"       ~ log(227.20  * 10^6),
@@ -339,6 +351,12 @@ load_data <- function(file_species_names, file_sociality_birdbase,
 
     # remove fallback matching column
     dplyr::select(!genus_and_species) |>
+
+    # edit genus and species names to match scientific name
+    mutate(
+      genus = stringr::word(scientific_name, 1),
+      species = stringr::word(scientific_name, 2)
+    ) |>
 
     # edit categorical columns to reflect (ordered) factor levels
     mutate(
