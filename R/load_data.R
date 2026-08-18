@@ -57,15 +57,17 @@
 #'       indicate larger differences in body size between males and females.}
 #'     \item{log_neuron_count}{Numeric. Estimated (or observed) neuron counts
 #'       for species on the log scale. Neuron counts are estimated by converting
-#'       brain mass measurements following a scaling equation outlined in Sol et
-#'       al. (2010). Taken from Hooper et al. (2022), Hardie and Cooney (2023),
-#'       or Tsuboi et al. (2018).}
+#'       brain mass measurements following a scaling equation outlined in
+#'       Olkowicz et al. (2016). Brain mass data taken from Hooper et al.
+#'       (2022), Hardie and Cooney (2023), or Tsuboi et al. (2018) in that
+#'       order. In other words, if data are missing from Hooper, we take data
+#'       from Hardie and Cooney.}
 #'     \item{log_neuron_count_sd}{Positive real. Measurement error for the log
 #'       neuron count estimate, represented as a standard deviation. The
 #'       standard deviation encodes variation across brain size datasets,
 #'       variation across specimens, and/or error due to uncertainty in the
-#'       exponent from the scaling equation in Sol et al. (2010). SDs are set
-#'       to 1e-07 for 11 species with observed neuronal counts.}
+#'       exponent from the scaling equation in Olkowicz et al. (2016). SDs are
+#'       set to 1e-07 for 11 species with observed neuronal counts.}
 #'   }
 #'
 load_data <- function(file_species_names, file_sociality_birdbase,
@@ -94,7 +96,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     # create fallback column for matching
     mutate(genus_and_species = paste(genus, species))
 
-  # load sociality data from Tobias et al. 2016
+  # load sociality data from Tobias et al. (2016)
   sociality_tobias <-
     readxl::read_xlsx(
       path = file_sociality_tobias
@@ -136,7 +138,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     mutate(scientific_name = standardise_scientific_names(scientific_name))
 
   # get bootstrapped exponent for brain volume to neuron count conversion
-  # (see Table S2 in https://doi.org/10.1073/pnas.1517131113)
+  # (see Table S2 in Olkowicz et al. https://doi.org/10.1073/pnas.1517131113)
   withr::with_seed(1, {
     exponent <- rnorm(1000, 1.144, (1.144 - 1.020) / 1.96)
   })
@@ -173,7 +175,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
 
     # convert from brain volume (ml) to brain mass (g) by multiplying
     # by the density of fresh brain tissue = 1.036 g ml–1
-    # (see https://doi.org/10.1371/journal.pone.0009617)
+    # (see Methods in Sol et al. https://doi.org/10.1371/journal.pone.0009617)
     mutate(
       brain_volume = exp(log_brain_volume),
       brain_mass = brain_volume * 1.036
@@ -181,7 +183,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
 
     # convert to log numbers of neurons by using scaling formula for parrots:
     # brain mass = 2.669 * 10^-10 * neurons^1.144
-    # (see Table S2 in https://doi.org/10.1073/pnas.1517131113)
+    # (see Table S2 in Olkowicz et al. https://doi.org/10.1073/pnas.1517131113)
     # we use bayesian-like bootstrapping to account for uncertainty in exponent
     rowwise() |>
     mutate(
@@ -202,7 +204,7 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     rename(log_neuron_count = log_neuron_count_mean) |>
 
     # manually add in observed average neuron counts for 11 parrot species
-    # (see Table S1 in https://doi.org/10.1073/pnas.1517131113)
+    # (see Table S1 in Olkowicz et al. https://doi.org/10.1073/pnas.1517131113)
     mutate(
       log_neuron_count = case_when(
         scientific_name == "Forpus passerinus"       ~ log(227.20  * 10^6),
