@@ -66,6 +66,19 @@ standardise_scientific_names <- function(name) {
     name == "Trichoglossus johnstoniae"    ~ "Saudareos johnstoniae",
     name == "Trichoglossus ornatus"        ~ "Saudareos ornata",
 
+    ### Additional mismatches from Beauchamp (2024) -> master list
+
+    name == "Alexandrinus eques"           ~ "Psittacula eques",
+    name == "Alexandrinus krameri"         ~ "Psittacula krameri",
+    name == "Belocercus longicaudus"       ~ "Psittacula longicauda",
+    name == "Himalayapsitta cyanocephala"  ~ "Psittacula cyanocephala",
+    name == "Himalayapsitta finschii"      ~ "Psittacula finschii",
+    name == "Himalayapsitta himalayana"    ~ "Psittacula himalayana",
+    name == "Himalayapsitta roseata"       ~ "Psittacula roseata",
+    name == "Nicopsitta columboides"       ~ "Psittacula columboides",
+    name == "Palaeornis eupatria"          ~ "Psittacula eupatria",
+    name == "Trichoglossus iris"           ~ "Saudareos iris",
+
     ### Additional mismatches in Krasheninnikova et al. (2024) -> master list
 
     name == "Psittacara acuticaudatus"     ~ "Thectocercus acuticaudatus",

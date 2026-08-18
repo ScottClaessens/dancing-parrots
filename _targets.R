@@ -29,6 +29,11 @@ list(
     format = "file"
   ),
   tar_target(
+    file_sociality_beauchamp,
+    "data/sociality/beauchamp_2024/appendix2.xlsx",
+    format = "file"
+  ),
+  tar_target(
     file_vocal_production_learning,
     "data/vocal_production_learning/parrot_vocalmimic_socioecol.xlsx",
     format = "file"
@@ -66,6 +71,7 @@ list(
       file_species_names,
       file_sociality_birdbase,
       file_sociality_tobias,
+      file_sociality_beauchamp,
       file_vocal_production_learning,
       file_sexual_dichromatism,
       file_sexual_size_dimorphism,

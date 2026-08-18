@@ -8,6 +8,8 @@
 #'   BIRDBASE.
 #' @param file_sociality_tobias Path to data on social behaviour from Tobias
 #'   et al. (2016).
+#' @param file_sociality_beauchamp Path to data on foraging group size from
+#'   Beauchamp (2024).
 #' @param file_vocal_production_learning Path to data on vocal production
 #'   learning.
 #' @param file_sexual_dichromatism Path to data on sexual dichromatism.
@@ -19,7 +21,7 @@
 #' @param file_brain_size_tsuboi Path to data on brain size from Tsuboi et al.
 #'   (2018).
 #'
-#' @returns A tibble with 406 rows and 17 columns:
+#' @returns A tibble with 406 rows and 19 columns:
 #'   \describe{
 #'     \item{scientific_name}{Character. The scientific name (genus and species
 #'       names) for the species.}
@@ -42,6 +44,10 @@
 #'     \item{social_bonds}{Ordered factor. Degree of social bonds (solitary,
 #'       short-term pair/group bond, or long-term pair/group bond). Taken from
 #'       Tobias et al. (2016).}
+#'     \item{log_foraging_group_size}{Positive real. Log geometric mean of
+#'       foraging group size. Taken from Beauchamp (2024).}
+#'     \item{foraging_group_research_effort}{Integer. Number of sources with
+#'       available information on flock sizes. Taken from Beauchamp (2024).}
 #'     \item{vocal_production_learning}{Factor. Presence/absence of vocal
 #'       production learning. Taken from Krasheninnikova et al. (2024).}
 #'     \item{sexual_dichromatism}{Positive real. Amount of sexual dichromatism,
@@ -71,10 +77,10 @@
 #'   }
 #'
 load_data <- function(file_species_names, file_sociality_birdbase,
-                      file_sociality_tobias, file_vocal_production_learning,
-                      file_sexual_dichromatism, file_sexual_size_dimorphism,
-                      file_brain_size_hooper, file_brain_size_hardie,
-                      file_brain_size_tsuboi) {
+                      file_sociality_tobias, file_sociality_beauchamp,
+                      file_vocal_production_learning, file_sexual_dichromatism,
+                      file_sexual_size_dimorphism, file_brain_size_hooper,
+                      file_brain_size_hardie, file_brain_size_tsuboi) {
 
   # load species names
   species_names <-
@@ -104,6 +110,19 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     transmute(
       scientific_name = standardise_scientific_names(Species),
       social_bonds = `Social bond`
+    )
+
+  # load foraging group size data from Beauchamp (2024)
+  sociality_beauchamp <-
+    readxl::read_xlsx(
+      path = file_sociality_beauchamp
+    ) |>
+    transmute(
+      scientific_name = standardise_scientific_names(
+        str_replace(`Old species name`, "_", " ")
+      ),
+      log_foraging_group_size = `Geometric mean group size`,
+      foraging_group_research_effort = as.integer(`Research effort`)
     )
 
   # load data on vocal production learning
@@ -332,6 +351,10 @@ load_data <- function(file_species_names, file_sociality_birdbase,
     left_join(sociality_birdbase, by = "scientific_name") |>
     join_datasets(sociality_tobias,
                   variable = "social_bonds") |>
+    join_datasets(sociality_beauchamp,
+                  variable = "log_foraging_group_size") |>
+    join_datasets(sociality_beauchamp,
+                  variable = "foraging_group_research_effort") |>
     join_datasets(vocal_production_learning,
                   variable = "vocal_production_learning") |>
     join_datasets(sexual_dichromatism,
