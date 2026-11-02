@@ -2,14 +2,14 @@ library(targets)
 tar_source()
 
 tar_option_set(
-  packages = c("readxl", "tidyverse", "withr")
+  packages = c("readxl", "testthat", "tidyverse", "withr")
 )
 
 # pipeline
 list(
 
   # ─────────────────────────────────────────
-  # Load species data
+  # Load data
   # ─────────────────────────────────────────
 
   # get data files
@@ -79,6 +79,9 @@ list(
       file_brain_size_hardie,
       file_brain_size_tsuboi
     )
-  )
+  ),
+
+  # run tests
+  tar_target(tests, run_tests(data))
 
 )

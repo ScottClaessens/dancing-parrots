@@ -7,11 +7,12 @@ file_brain_size_hooper|stem|4f399384f6a82ec9|fee8a17202f81e46|2c530c1562a7fbd1|-
 file_brain_size_hardie|stem|c3f251cb086793a5|bf5c12cbebad581f|2c530c1562a7fbd1|-41481545|data/brain_size/hardie_cooney_2023/Brain_data.csv|t20678.4362084904s|s334691b|334691|file|local|vector|||0.962||
 file_brain_size_tsuboi|stem|53861af4e7ed81c1|19b82e522435fe91|2c530c1562a7fbd1|1205438584|data/brain_size/tsuboi_et_al_2018/Tsuboi_etal_NEE_bird.xlsx|t20678.4913596109s|s1126942b|1126942|file|local|vector|||1.044||
 file_sociality_beauchamp|stem|1090a5bcfa073201|80816553ef4e9bbc|2c530c1562a7fbd1|789161084|data/sociality/beauchamp_2024/appendix2.xlsx|t20032.5447453704s|s113089b|113089|file|local|vector|||0.419||
-file_sexual_dichromatism|stem|2870f80dc962beb7|7d0acb15e8bde623|2c530c1562a7fbd1|1179132687|data/sexual_dichromatism/sexual_dichromatism.csv|t20759.5759840758s|s15893b|15893|file|local|vector|||0.922||
-file_sexual_size_dimorphism|stem|a36a4a5633f85eb4|046cfb1ceb397c19|2c530c1562a7fbd1|-442857465|data/sexual_size_dimorphism/sexual_size_dimorphism.csv|t20759.576389867s|s15700b|15700|file|local|vector|||0.339||
 data|stem|25e436d8092f2066|80ac69542759691b|d3aa0f3c79a30f72|33550471||t20759.6311008157s|s23657b|23657|rds|local|vector|||7.884||
+file_sexual_dichromatism|stem|2870f80dc962beb7|7d0acb15e8bde623|2c530c1562a7fbd1|1179132687|data/sexual_dichromatism/sexual_dichromatism.csv|t20759.6324141916s|s15893b|15893|file|local|vector|||0.922||
+file_sexual_size_dimorphism|stem|a36a4a5633f85eb4|046cfb1ceb397c19|2c530c1562a7fbd1|-442857465|data/sexual_size_dimorphism/sexual_size_dimorphism.csv|t20759.6326211411s|s15700b|15700|file|local|vector|||0.339||
 standardise_scientific_names|function|eb164df11cab060d
 convert_binary|function|0037fddb88b933c8
+run_tests|function|84ad6ffc21adaa7a
 load_species_names|function|eb37d3f46344ae84
 convert_ordered|function|69b34bab63f061a7
 join_datasets|function|dfb7e361eb2e3b75
@@ -25,3 +26,4 @@ load_brain_size_hooper|function|998041641c080e09
 load_sexual_dichromatism|function|59d5e63ce675de42
 load_sexual_size_dimorphism|function|42498888d40cda73
 load_data|function|d55af49ea92d98ca
+tests|stem|6c751569b3b645d8|de1acf854baf30a5|58b9d6f90a9ea260|825430208||t20759.6793833056s|s386b|386|rds|local|vector|||0.577||
