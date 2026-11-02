@@ -12,7 +12,7 @@ library(data.table) # v1.18.4
 library(readxl)     # v1.4.5
 
 # load data
-L <-
+l <-
   readxl::read_excel(
     path = "data/sexual_size_dimorphism/life_history.xlsx"
   ) |>
@@ -25,10 +25,10 @@ L <-
 # duplicated male tarsus and tail measurements in both the male and female
 # parts of the dataset - this is fixed below, so values will differ from the
 # original paper
-male   <- L[, .(scinam,   male_wing_mm,   male_tarsus_mm,   male_tail_mm)]
-female <- L[, .(scinam, female_wing_mm, female_tarsus_mm, female_tail_mm)]
+male   <- l[, .(scinam,   male_wing_mm,   male_tarsus_mm,   male_tail_mm)]
+female <- l[, .(scinam, female_wing_mm, female_tarsus_mm, female_tail_mm)]
 
-L1 <-
+l1 <-
   rbind(
     male[, sex := "male"],
     female[, sex := "female"],
@@ -37,46 +37,46 @@ L1 <-
   na.omit()
 
 # compute body size PCA
-PCA <-
+pca <-
   prcomp(
-    L1[, .(male_wing_mm, male_tarsus_mm, male_tail_mm)],
+    l1[, .(male_wing_mm, male_tarsus_mm, male_tail_mm)],
     center = TRUE,
     scale. = TRUE
   )
 
 # add first principal component to dataset
-L1[, PC1 := (PCA |> predict() |> as_tibble() |> dplyr::select(PC1))]
+l1[, pc1 := (pca |> predict() |> as_tibble() |> dplyr::select(PC1))]
 
 # from long to wide format
-L1 <-
+l1 <-
   dcast(
-    L1[, .(scinam, PC1, sex)],
+    l1[, .(scinam, pc1, sex)],
     scinam ~ sex,
-    value.var = "PC1"
+    value.var = "pc1"
   )
 
 setnames(
-  L1,
+  l1,
   c("male", "female"),
   c("male_bodySize_PC1", "female_bodySize_PC1")
 )
 
 # add pca scores to original dataset
-L <-
+l <-
   merge(
-    L,
-    L1[, .(scinam, male_bodySize_PC1, female_bodySize_PC1)],
+    l,
+    l1[, .(scinam, male_bodySize_PC1, female_bodySize_PC1)],
     all.x = TRUE,
     by = "scinam"
   )
 
 # compute sexual size dimorphism (absolute difference between PCAs)
-L[, scientific_name := str_to_sentence(scinam)]
-L[, sexual_size_dimorphism := abs(male_bodySize_PC1 - female_bodySize_PC1)]
+l[, scientific_name := str_to_sentence(scinam)]
+l[, sexual_size_dimorphism := abs(male_bodySize_PC1 - female_bodySize_PC1)]
 
 # write to file
 write.csv(
-  x = L[, .(scientific_name, sexual_size_dimorphism)],
+  x = l[, .(scientific_name, sexual_size_dimorphism)],
   file = "data/sexual_size_dimorphism/sexual_size_dimorphism.csv",
   row.names = FALSE
 )

@@ -28,7 +28,7 @@ rm(con, path)
 
 d[, nsex := NULL]
 d[, id := .I]
-d[, mark := factor(mark, levels = c("crown","forehead", "nape",  "throat",
+d[, mark := factor(mark, levels = c("crown", "forehead", "nape", "throat",
                                     "shoulder", "ubreast", "lbreast",
                                     "scovers", "pcovers", "secondaries",
                                     "primaries", "tail") |> rev())]
@@ -37,7 +37,7 @@ d[, col := grDevices::rgb(R, G, B, max = 255), by = id]
 # convert hex codes in col column to L, a, and b values
 
 x <- data.table(d[, as(colorspace::hex2RGB(col), "LAB")]@coords)
-setnames(x, c('L', 'a', 'b'))
+setnames(x, c("L", "a", "b"))
 d <- cbind(d, x)
 rm(x)
 
@@ -58,17 +58,17 @@ d[
 # wide format by mark
 
 w <- merge(
-  d[sex == 'f', .(scinam,col, mark, L, a, b, ces, cds)],
-  d[sex == 'm', .(scinam,col, mark, L, a, b, ces, cds)],
-  by = c('scinam', 'mark'),
-  suffixes = c('_f', '_m')
+  d[sex == "f", .(scinam, col, mark, L, a, b, ces, cds)],
+  d[sex == "m", .(scinam, col, mark, L, a, b, ces, cds)],
+  by = c("scinam", "mark"),
+  suffixes = c("_f", "_m")
 )
 
 # sexual dichromatism: euclidean distance in CIELAB space
 
 w[
   ,
-  sexdic := sqrt ((L_m - L_f)^2 + (a_m - a_f)^2 + (b_m - b_f)^2),
+  sexdic := sqrt((L_m - L_f)^2 + (a_m - a_f)^2 + (b_m - b_f)^2),
   by = .(scinam, mark)
 ]
 
